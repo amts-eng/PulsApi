@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Organizations.Update
+namespace PulsApi.Organizations.Update
 {
     sealed class Request
     {

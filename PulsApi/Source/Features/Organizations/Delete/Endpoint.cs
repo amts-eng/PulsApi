@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using PulsApi.Data;
 
-namespace Organizations.Delete
+namespace PulsApi.Organizations.Delete
 {
     sealed class Endpoint : EndpointWithoutRequest
     {
@@ -10,7 +10,6 @@ namespace Organizations.Delete
         public override void Configure()
         {
             Delete("/api/organizations/{id}");
-            AllowAnonymous();
         }
 
         public override async Task HandleAsync(CancellationToken c)

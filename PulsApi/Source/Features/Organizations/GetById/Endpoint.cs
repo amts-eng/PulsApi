@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using PulsApi.Data;
 
-namespace Organizations.GetById
+namespace PulsApi.Organizations.GetById
 {
     sealed class Endpoint : EndpointWithoutRequest<Response>
     {
@@ -10,7 +10,6 @@ namespace Organizations.GetById
         public override void Configure()
         {
             Get("/api/organizations/{id}");
-            AllowAnonymous();
         }
 
         public override async Task HandleAsync(CancellationToken c)

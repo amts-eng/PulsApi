@@ -1,6 +1,6 @@
 using PulsApi.Data;
 
-namespace Organizations.Create
+namespace PulsApi.Organizations.Create
 {
     sealed class Endpoint : Endpoint<Request, Response>
     {
@@ -9,7 +9,6 @@ namespace Organizations.Create
         public override void Configure()
         {
             Post("/api/organizations");
-            AllowAnonymous();
         }
 
         public override async Task HandleAsync(Request r, CancellationToken c)

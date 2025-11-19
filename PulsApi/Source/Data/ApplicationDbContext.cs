@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using Organizations.Models;
+using PulsApi.Organizations.Models;
+using PulsApi.Auth.Models;
 
 namespace PulsApi.Data
 {
@@ -11,6 +12,7 @@ namespace PulsApi.Data
         }
 
         public DbSet<Organization> Organizations { get; set; }
+        public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -24,6 +26,20 @@ namespace PulsApi.Data
                     .HasMaxLength(100);
                 entity.Property(e => e.Description)
                     .HasMaxLength(500);
+            });
+
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Email)
+                    .IsRequired()
+                    .HasMaxLength(256);
+                entity.HasIndex(e => e.Email)
+                    .IsUnique();
+                entity.Property(e => e.PasswordHash)
+                    .IsRequired();
+                entity.Property(e => e.CreatedAt)
+                    .IsRequired();
             });
         }
     }

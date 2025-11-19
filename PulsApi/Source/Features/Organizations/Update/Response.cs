@@ -1,4 +1,4 @@
-namespace Organizations.Update
+namespace PulsApi.Organizations.Update
 {
     sealed class Response
     {

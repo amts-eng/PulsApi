@@ -1,4 +1,4 @@
-namespace Organizations.Models
+namespace PulsApi.Organizations.Models
 {
     public sealed class Organization
     {

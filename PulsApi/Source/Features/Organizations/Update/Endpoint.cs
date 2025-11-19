@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using PulsApi.Data;
 
-namespace Organizations.Update
+namespace PulsApi.Organizations.Update
 {
     sealed class Endpoint : Endpoint<Request, Response>
     {
@@ -10,7 +10,6 @@ namespace Organizations.Update
         public override void Configure()
         {
             Put("/api/organizations/{id}");
-            AllowAnonymous();
         }
 
         public override async Task HandleAsync(Request r, CancellationToken c)

@@ -1,4 +1,4 @@
-namespace Organizations.GetAll
+namespace PulsApi.Organizations.GetAll
 {
     sealed class Response
     {
