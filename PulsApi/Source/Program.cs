@@ -2,6 +2,10 @@ using Microsoft.EntityFrameworkCore;
 using PulsApi.Data;
 
 var bld = WebApplication.CreateBuilder(args);
+
+// Configure URLs to listen on all network interfaces
+bld.WebHost.UseUrls("http://0.0.0.0:5000");
+
 bld.Services
    .AddDbContext<ApplicationDbContext>(options =>
        options.UseSqlServer(bld.Configuration.GetConnectionString("DefaultConnection")))
