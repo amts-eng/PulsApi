@@ -45,7 +45,17 @@ namespace PulsApi.Organizations.GetTree
                                             Id = p.Id,
                                             FirstName = p.FirstName,
                                             LastName = p.LastName,
-                                            Email = p.Email
+                                            Email = p.Email,
+                                            Hobbies = Db.PersonHobbies
+                                                .Where(ph => ph.PersonId == p.Id)
+                                                .Select(ph => new HobbyDto
+                                                {
+                                                    Id = ph.Hobby.Id,
+                                                    Name = ph.Hobby.Name,
+                                                    Description = ph.Hobby.Description,
+                                                    AssignedAt = ph.AssignedAt
+                                                })
+                                                .ToList()
                                         })
                                         .ToList()
                                 })

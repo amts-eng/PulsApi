@@ -4,6 +4,7 @@ using PulsApi.Auth.Models;
 using PulsApi.BusinessUnits.Models;
 using PulsApi.Teams.Models;
 using PulsApi.People.Models;
+using PulsApi.Hobbies.Models;
 
 namespace PulsApi.Data
 {
@@ -19,6 +20,8 @@ namespace PulsApi.Data
         public DbSet<BusinessUnit> BusinessUnits { get; set; }
         public DbSet<Team> Teams { get; set; }
         public DbSet<Person> People { get; set; }
+        public DbSet<Hobby> Hobbies { get; set; }
+        public DbSet<PersonHobby> PersonHobbies { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -104,6 +107,36 @@ namespace PulsApi.Data
                     .WithMany()
                     .HasForeignKey(e => e.TeamId)
                     .OnDelete(DeleteBehavior.SetNull);
+            });
+
+            modelBuilder.Entity<Hobby>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(100);
+                entity.Property(e => e.Description)
+                    .HasMaxLength(500);
+            });
+
+            modelBuilder.Entity<PersonHobby>(entity =>
+            {
+                // Composite key
+                entity.HasKey(ph => new { ph.PersonId, ph.HobbyId });
+                
+                // Configure relationships
+                entity.HasOne(ph => ph.Person)
+                    .WithMany(p => p.PersonHobbies)
+                    .HasForeignKey(ph => ph.PersonId)
+                    .OnDelete(DeleteBehavior.Cascade);
+                
+                entity.HasOne(ph => ph.Hobby)
+                    .WithMany(h => h.PersonHobbies)
+                    .HasForeignKey(ph => ph.HobbyId)
+                    .OnDelete(DeleteBehavior.Cascade);
+                
+                entity.Property(ph => ph.AssignedAt)
+                    .IsRequired();
             });
         }
     }

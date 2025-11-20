@@ -10,5 +10,8 @@ namespace PulsApi.People.Models
         
         // Navigation property
         public Teams.Models.Team? Team { get; set; }
+        
+        // Navigation property for many-to-many
+        public ICollection<Hobbies.Models.PersonHobby> PersonHobbies { get; set; } = new List<Hobbies.Models.PersonHobby>();
     }
 }
