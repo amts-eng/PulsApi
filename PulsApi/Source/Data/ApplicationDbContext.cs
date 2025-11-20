@@ -98,6 +98,12 @@ namespace PulsApi.Data
                     .HasMaxLength(256);
                 entity.HasIndex(e => e.Email)
                     .IsUnique();
+                
+                // Configure optional relationship to Team
+                entity.HasOne(e => e.Team)
+                    .WithMany()
+                    .HasForeignKey(e => e.TeamId)
+                    .OnDelete(DeleteBehavior.SetNull);
             });
         }
     }

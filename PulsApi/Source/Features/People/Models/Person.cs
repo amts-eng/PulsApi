@@ -6,5 +6,9 @@ namespace PulsApi.People.Models
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
+        public int? TeamId { get; set; }
+        
+        // Navigation property
+        public Teams.Models.Team? Team { get; set; }
     }
 }

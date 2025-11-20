@@ -23,11 +23,26 @@ namespace PulsApi.People.Create
                 return;
             }
 
+            // Verify team exists if provided
+            string? teamName = null;
+            if (r.TeamId.HasValue)
+            {
+                var team = await Db.Teams.FindAsync(new object[] { r.TeamId.Value }, c);
+                if (team == null)
+                {
+                    AddError("Team not found");
+                    await SendErrorsAsync(404, c);
+                    return;
+                }
+                teamName = team.Name;
+            }
+
             var person = new Models.Person
             {
                 FirstName = r.FirstName,
                 LastName = r.LastName,
-                Email = r.Email
+                Email = r.Email,
+                TeamId = r.TeamId
             };
 
             Db.People.Add(person);
@@ -38,7 +53,9 @@ namespace PulsApi.People.Create
                 Id = person.Id,
                 FirstName = person.FirstName,
                 LastName = person.LastName,
-                Email = person.Email
+                Email = person.Email,
+                TeamId = person.TeamId,
+                TeamName = teamName
             }, 201, c);
         }
     }

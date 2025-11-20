@@ -6,5 +6,7 @@ namespace PulsApi.People.Create
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
+        public int? TeamId { get; set; }
+        public string? TeamName { get; set; }
     }
 }

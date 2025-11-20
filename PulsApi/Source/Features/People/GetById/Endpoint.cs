@@ -15,7 +15,9 @@ namespace PulsApi.People.GetById
         public override async Task HandleAsync(CancellationToken c)
         {
             var id = Route<int>("id");
-            var person = await Db.People.FindAsync(new object[] { id }, c);
+            var person = await Db.People
+                .Include(p => p.Team)
+                .FirstOrDefaultAsync(p => p.Id == id, c);
 
             if (person == null)
             {
@@ -28,7 +30,9 @@ namespace PulsApi.People.GetById
                 Id = person.Id,
                 FirstName = person.FirstName,
                 LastName = person.LastName,
-                Email = person.Email
+                Email = person.Email,
+                TeamId = person.TeamId,
+                TeamName = person.Team?.Name
             }, cancellation: c);
         }
     }

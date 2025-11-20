@@ -14,7 +14,9 @@ namespace PulsApi.People.GetAll
 
         public override async Task HandleAsync(CancellationToken c)
         {
-            var people = await Db.People.ToListAsync(c);
+            var people = await Db.People
+                .Include(p => p.Team)
+                .ToListAsync(c);
 
             await SendAsync(new Response
             {
@@ -23,7 +25,9 @@ namespace PulsApi.People.GetAll
                     Id = p.Id,
                     FirstName = p.FirstName,
                     LastName = p.LastName,
-                    Email = p.Email
+                    Email = p.Email,
+                    TeamId = p.TeamId,
+                    TeamName = p.Team?.Name
                 }).ToList()
             }, cancellation: c);
         }
