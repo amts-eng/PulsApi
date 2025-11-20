@@ -3,6 +3,7 @@ using PulsApi.Organizations.Models;
 using PulsApi.Auth.Models;
 using PulsApi.BusinessUnits.Models;
 using PulsApi.Teams.Models;
+using PulsApi.People.Models;
 
 namespace PulsApi.Data
 {
@@ -17,6 +18,7 @@ namespace PulsApi.Data
         public DbSet<User> Users { get; set; }
         public DbSet<BusinessUnit> BusinessUnits { get; set; }
         public DbSet<Team> Teams { get; set; }
+        public DbSet<Person> People { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -80,6 +82,22 @@ namespace PulsApi.Data
                     .WithMany()
                     .HasForeignKey(e => e.BusinessUnitId)
                     .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<Person>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.FirstName)
+                    .IsRequired()
+                    .HasMaxLength(100);
+                entity.Property(e => e.LastName)
+                    .IsRequired()
+                    .HasMaxLength(100);
+                entity.Property(e => e.Email)
+                    .IsRequired()
+                    .HasMaxLength(256);
+                entity.HasIndex(e => e.Email)
+                    .IsUnique();
             });
         }
     }
